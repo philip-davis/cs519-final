@@ -1,0 +1,6 @@
+[submodule "ADIOS2"]
+	path = ADIOS2
+	url = https://github.com/ornladios/ADIOS2
+[submodule "libfabric"]
+	path = libfabric
+	url = https://github.com/ofiwg/libfabric
