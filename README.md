@@ -16,9 +16,11 @@ Steps to Build
 3. Run the `install.sh` script to build all packages
 
 Steps to Run:
-1. Update the FABRIC_IFACE environment variable. It's difficult to give guidance on what the right value to use here for a given system, but generally trying different likely-looking interfaces found by `ifconfig` should work. If this is being run on a single machine rather than a cluster, then running the following from the repo base directory might give some hints. Picking the wrong value should crash the program in subsequent steps.
+1. Update the FABRIC_IFACE environment variable. It's difficult to give guidance on what the right value to use here for a given system, but generally trying different likely-looking interfaces found by `ifconfig` should work. If this is being run on a single machine rather than a cluster, then running the following from the repo base directory might give some hints:
 
 `install/libfabric/bin/fi_info -p sockets -t FI_EP_MSG | grep domain`
+
+Picking the wrong value should crash the program in subsequent steps; some trial and error might be necessary, unfortunately.
 
 2. 
 
