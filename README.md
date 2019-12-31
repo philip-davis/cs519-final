@@ -5,7 +5,7 @@ The files for reproduction are held in a github repo:
 
 https://github.com/philip-davis/cs519-final
 
-This repo contains files necessary for building and running the SST RDMA preload mode. This downloads both production ADIOS2, and the preload branch (lf-push) from my ADIOS2 fork, which I wrote for this project. The preload version is based off commit ff343d72b775008c888daefebcc28d19b41cebff from the main repo. These are pulled into the main repo using submodules.
+This repo contains files necessary for building and running the SST RDMA preload mode. This downloads both production ADIOS2, and the preload branch (lf-push) from my ADIOS2 fork, which I wrote for this project. The preload version is based off commit ff343d72b775008c888daefebcc28d19b41cebff from the main repo. These are pulled into the main repo using submodules. The repo contains a diff of the work done for the new preload branch.
 
 Prerequisites: MPI compiler wrappers and runner (tested with GNU compiler, ymmv for others) CMake and autotools, git, wget
 
