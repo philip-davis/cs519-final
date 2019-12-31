@@ -9,18 +9,30 @@ This repo contains files necessary for building and running the SST RDMA preload
 
 Prerequisites: MPI compiler wrappers and runner (tested with GNU compiler, ymmv for others) CMake and autotools, git, wget
 
-Steps to Build
+**Steps to Build**
 
 1. Clone the cs519-final repo
 2. Run the `init.sh` script to populate the submodules
 3. Run the `install.sh` script to build all packages
 
-Steps to Run:
-1. Update the FABRIC_IFACE environment variable. It's difficult to give guidance on what the right value to use here for a given system, but generally trying different likely-looking interfaces found by `ifconfig` should work. If this is being run on a single machine rather than a cluster, then running the following from the repo base directory might give some hints:
+**The Test Workflow**
+A simple heat transfer numerical simulation (`writer`) coupled to a trivial analysis routine that calculates the time derivative of the simulation output (`reader`). The workflow iterates an arbitrary number of steps. The simulation domain is a regularly decomposed two-dimensional grid. Crucially, write/read patterns are constant through all timesteps.
+
+**Steps to Run**
+There are a couple different scripts that can be used to run the workflow and get timing results. The first is `run.sh`:
+
+1. run.sh *<writer_ranks>* *<reader_ranks>* *<writer_data_size>* *<steps>* *<fabric_interface>*
+
+writer_ranks - the number of processes doing the simulation/writing data
+reader_ranks - the number of processes doing the analysis/reading data
+writer_data_size - the size of the data being written by **each** writer rank, in bytes
+steps - the number of steps to run (timing will be ignored for the first two)
+fabric_interface - the interface that should be used for communication. 
+
+
+Picking the wrong value should crash the program in subsequent steps; some trial and error might be necessary, unfortunately. It's difficult to give guidance on what the right value to use here for a given system, but generally trying different likely-looking interfaces found by `ifconfig` should work. If this is being run on a single machine rather than a cluster, then running the following from the repo base directory might give some hints:
 
 `install/libfabric/bin/fi_info -p sockets -t FI_EP_MSG | grep domain`
-
-Picking the wrong value should crash the program in subsequent steps; some trial and error might be necessary, unfortunately.
 
 2. 
 
