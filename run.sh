@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 ADIOS2_PATH=ADIOS2/build/bin
 PRELOAD_PATH=ADIOS2.preload/build/bin
@@ -41,6 +41,7 @@ WPULLOG=writer.pull.${LOGSFX}
 RPULLOG=reader.pull.${LOGSFX}
 WPUSHLOG=writer.push.${LOGSFX}
 RPUSHLOG=reader.push.${LOGSFX}
+IMPILOG=output.impi.${LOGSFX}
 
 mpirun -np $WR ${ADIOS2_PATH}/heatTransfer_write_adios2 heat_sst_rdma.xml heat $WXR $WYR $XDIM $YDIM $STEPS $STEPS &> ${WPULLOG} &
 while [ ! -f heat.sst ] ; do
@@ -60,8 +61,15 @@ mpirun -np $RR ${ADIOS2_PATH}/heatTransfer_read heat_sst_rdma.xml heat heat.sst.
 
 wait
 
+mpirun -np $WR ${ADIOS2_PATH}/heatTransfer_write_adios2 heat_impi.xml heat $WXR $WYR $XDIM $YDIM $STEPS $STEPS : -np $RR ${ADIOS2_PATH}/heatTransfer_read heat_impi.xml heat heat.sst.out $RXR $RYR &> ${IMPILOG}
+
+wait
+
 echo -n pull,$WR,$RR,$SIZE,$((STEPS - 2)),
 awk '/Total read time/ {print $5}' ${RPULLOG}
 
 echo -n push,$WR,$RR,$SIZE,$((STEPS - 2)),
 awk '/Total read time/ {print $5}' ${RPUSHLOG}
+
+echo -n impi,$WR,$RR,$SIZE,$((STEPS - 2)),
+awk '/Total read time/ {print $5}' ${IMPILOG}
