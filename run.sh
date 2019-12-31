@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash
 
 ADIOS2_PATH=ADIOS2/build/bin
 PRELOAD_PATH=ADIOS2.preload/build/bin
