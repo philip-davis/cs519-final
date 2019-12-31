@@ -1,17 +1,8 @@
 diff --git a/examples/heatTransfer/read/heatRead.cpp b/examples/heatTransfer/read/heatRead.cpp
-index cf653b2..aa6e331 100644
+index cf653b2..3289f5c 100644
 --- a/examples/heatTransfer/read/heatRead.cpp
 +++ b/examples/heatTransfer/read/heatRead.cpp
-@@ -75,13 +75,17 @@ int main(int argc, char *argv[])
-     MPI_Comm_size(MPI_COMM_WORLD, &wnproc);
- 
-     const unsigned int color = 2;
--    MPI_Comm mpiReaderComm;
--    MPI_Comm_split(MPI_COMM_WORLD, color, wrank, &mpiReaderComm);
-+    MPI_Comm mpiReaderComm = MPI_COMM_WORLD;
-+    // MPI_Comm_split(MPI_COMM_WORLD, color, wrank, &mpiReaderComm);
- 
-     int rank, nproc;
+@@ -82,6 +82,10 @@ int main(int argc, char *argv[])
      MPI_Comm_rank(mpiReaderComm, &rank);
      MPI_Comm_size(mpiReaderComm, &nproc);
  
@@ -88,7 +79,7 @@ index cf653b2..aa6e331 100644
      return 0;
  }
 diff --git a/examples/heatTransfer/write/main.cpp b/examples/heatTransfer/write/main.cpp
-index d8ec64a..a766ecf 100644
+index d8ec64a..67221a9 100644
 --- a/examples/heatTransfer/write/main.cpp
 +++ b/examples/heatTransfer/write/main.cpp
 @@ -38,7 +38,6 @@ void printUsage()
@@ -99,17 +90,15 @@ index d8ec64a..a766ecf 100644
      /* When writer and reader is launched together with a single mpirun command,
         the world comm spans all applications. We have to split and create the
         local 'world' communicator mpiHeatTransferComm for the writer only.
-@@ -49,15 +48,13 @@ int main(int argc, char *argv[])
+@@ -49,7 +48,6 @@ int main(int argc, char *argv[])
      int wrank, wnproc;
      MPI_Comm_rank(MPI_COMM_WORLD, &wrank);
      MPI_Comm_size(MPI_COMM_WORLD, &wnproc);
 -
      const unsigned int color = 1;
--    MPI_Comm mpiHeatTransferComm;
--    MPI_Comm_split(MPI_COMM_WORLD, color, wrank, &mpiHeatTransferComm);
-+    MPI_Comm mpiHeatTransferComm = MPI_COMM_WORLD;
-+    // MPI_Comm_split(MPI_COMM_WORLD, color, wrank, &mpiHeatTransferComm);
- 
+     MPI_Comm mpiHeatTransferComm;
+     MPI_Comm_split(MPI_COMM_WORLD, color, wrank, &mpiHeatTransferComm);
+@@ -57,7 +55,6 @@ int main(int argc, char *argv[])
      int rank, nproc;
      MPI_Comm_rank(mpiHeatTransferComm, &rank);
      MPI_Comm_size(mpiHeatTransferComm, &nproc);
