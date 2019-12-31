@@ -4,3 +4,7 @@
 [submodule "libfabric"]
 	path = libfabric
 	url = https://github.com/ofiwg/libfabric
+[submodule "ADIOS2.preload"]
+	path = ADIOS2.preload
+	url = https://github.com/philip-davis/ADIOS2
+	branch = lf-push
