@@ -16,7 +16,7 @@ fi
 wget https://github.com/ofiwg/libfabric/releases/download/v1.6.2/libfabric-1.6.2.tar.gz
 tar -xvzf libfabric-1.6.2.tar.gz
 cd libfabric-1.6.2
-./configure --prefix=${LIBFABRIC_DIR} --disable-usnic --disable-verbs CC=${CC}
+./configure --prefix=${LIBFABRIC_DIR} --disable-usnic CC=${CC}
 make clean
 make
 make install
